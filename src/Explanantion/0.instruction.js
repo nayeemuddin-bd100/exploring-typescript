@@ -24,7 +24,7 @@
   
   10. Modules and Namespaces, 
   
-  11. Decorators,
+  11. Decorators, **
 
   12. Advanced Types:
      - Union types, intersection types, conditional types, mapped types.

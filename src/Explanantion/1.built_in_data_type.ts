@@ -100,7 +100,7 @@ let notSure: any = 4;
 notSure = "maybe a string instead";
 
 // Void
-// Void data type represents the absence of a value.
+// Void data type represents the absence of a value. It is commonly used as the return type of functions that do not return any value.
 function warnUser(): void {
 	console.log("This is a warning message");
 }

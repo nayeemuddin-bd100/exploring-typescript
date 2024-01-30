@@ -2,12 +2,64 @@
 
 // with function
 function swap<T>(a: T, b: T): [T, T] {
-    return [b, a];
+	return [b, a];
 }
 
-const swappedNumbers = swap(1, 5);  // inferred type: [number, number]
-const swappedNumbersString = swap<number | string>(1, "5");  // inferred type: [string, number]
-const swappedStrings = swap("hello", "world");  // inferred type: [string, string]
+const swappedNumbers = swap(1, 5); // inferred type: [number, number]
+const swappedNumbersString = swap<number | string>(1, "5"); // inferred type: [string, number]
+const swappedStrings = swap("hello", "world"); // inferred type: [string, string]
+
+const createArr = (params: string): string[] => {
+	return [params];
+};
+
+const createArr2 = <T>(params: T): T[] => {
+	return [params];
+};
+
+const res1 = createArr2<string>("hello");
+const res2 = createArr2<boolean>(false);
+
+// with interface
+interface Pair<T, U> {
+	first: T;
+	second: U;
+}
+
+const numberStringPair: Pair<number, string> = { first: 42, second: "hello" };
+const stringBooleanPair: Pair<string, boolean> = {
+	first: "world",
+	second: true,
+};
+
+// Using 'extends' to enforce a constraint on the generic type
+function printName<T extends { name: string }>(obj: T): void {
+	console.log(obj.name);
+}
+
+// Valid usages
+printName({ name: "John" });
+printName({ name: "Jane", age: 25 });
+
+// Error: Argument of type '{ age: number }' is not assignable to parameter of type '{ name: string; }'
+// printName({ age: 30 });
+
+// Generic Constraint: T extends { name: string } means that T must be a type that extends or has at least the properties of { name: string }.
+
+// keyof
+type PersonType1 = {
+	name: string;
+	age: number;
+	address: string;
+};
+
+type newType = "name" | "age" | "address";
+
+// we can do it using keyof
+type newTypeUsingKeyOf = keyof PersonType1;
+
+const nameKey: newType = "name";
+const nameKey2: newTypeUsingKeyOf = "name";
 
 // with class
 class Box<T> {
@@ -28,32 +80,18 @@ const stringBox = new Box("hello"); // inferred type: Box<string>
 const numberValue: number = numberBox.getValue();
 const stringValue: string = stringBox.getValue();
 
-
-// with interface
-interface Pair<T, U> {
-	first: T;
-	second: U;
-}
-
-const numberStringPair: Pair<number, string> = { first: 42, second: "hello" };
-const stringBooleanPair: Pair<string, boolean> = {
-	first: "world",
-	second: true,
-};
-
-
 // ******************************* //
 
 class ArrayUtility<T> {
-    private items: T[] = [];
+	private items: T[] = [];
 
-    addItem(item: T): void {
-        this.items.push(item);
-    }
+	addItem(item: T): void {
+		this.items.push(item);
+	}
 
-    getItems(): T[] {
-        return this.items;
-    }
+	getItems(): T[] {
+		return this.items;
+	}
 }
 
 const numberArrayUtility = new ArrayUtility<number>();
